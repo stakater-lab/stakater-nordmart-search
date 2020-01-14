@@ -1,0 +1,31 @@
+skakater-nordmart-search:
+  kafka:
+    product.topic:
+      create.on-startup: true
+      name: productsTopic
+      number-of-partitions: 1
+      replication-factor: 1
+    bootstrap-servers: ${KAFKA_ADDRESS:localhost:9092}
+  cors.allowed.hosts: http://localhost:4200,http://0.0.0.0:4200
+  elasticsearch:
+    host: ${ELASTICSEARCH_HOST:localhost}
+    port: ${ELASTICSEARCH_PORT:9200}
+    username: ${ELASTICSEARCH_USERNAME:stakater}
+    password: ${ELASTICSEARCH_PASSWORD:stakatertest}
+
+spring:
+  application.name: skakater-normart-search
+
+server:
+  servlet:
+    contextPath: /api
+  error.include-stacktrace: never
+  host: ${HOST:localhost}
+  port: ${PORT:8081}
+
+management:
+  endpoint:
+    metrics.enabled: true
+    prometheus.enabled: true
+  endpoints.web.exposure.include: "*"
+  metrics.export.prometheus.enabled: true
