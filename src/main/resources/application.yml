@@ -21,7 +21,7 @@ server:
     contextPath: /api
   error.include-stacktrace: never
   host: ${HOST:localhost}
-  port: ${PORT:8081}
+  port: ${PORT:8080}
 
 management:
   endpoint:
