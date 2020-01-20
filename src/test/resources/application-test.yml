@@ -1,5 +1,6 @@
 skakater-nordmart-search:
   kafka:
+
     product.topic:
       create.on-startup: true
       name: productsTopic
@@ -20,7 +21,7 @@ server:
   servlet:
     contextPath: /api
   error.include-stacktrace: never
-  host: ${HOST:localhost}
+  host: ${HOST:http://localhost}
   port: ${PORT:8080}
 
 management:

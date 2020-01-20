@@ -1,5 +1,6 @@
 package com.stakater.nordmart.search.dto.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -14,5 +15,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 })
 public interface ProductCommand {
 
+    @JsonIgnore
     ProductCommandType getType();
 }
