@@ -14,13 +14,13 @@ import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfig
 public class ElasticsearchClientConfig extends AbstractElasticsearchConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(ElasticsearchClientConfig.class);
 
-    @Value("${skakater-nordmart-search.elasticsearch.host}")
+    @Value("${stakater-nordmart-search.elasticsearch.host}")
     private String elasticsearchHost;
-    @Value("${skakater-nordmart-search.elasticsearch.port}")
+    @Value("${stakater-nordmart-search.elasticsearch.port}")
     private String elasticsearchPort;
-    @Value("${skakater-nordmart-search.elasticsearch.username}")
+    @Value("${stakater-nordmart-search.elasticsearch.username}")
     private String elasticsearchUsername;
-    @Value("${skakater-nordmart-search.elasticsearch.password}")
+    @Value("${stakater-nordmart-search.elasticsearch.password}")
     private String elasticsearchPassword;
 
     @Override

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @Api("Controller responsible for search products operations.")
-@RequestMapping(path = "/v1/product-search", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api/v1/product-search", produces = APPLICATION_JSON_VALUE)
 @RestController
 public class ProductSearchController {
     @Autowired

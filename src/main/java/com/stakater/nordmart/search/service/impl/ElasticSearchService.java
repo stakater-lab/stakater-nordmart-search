@@ -8,6 +8,8 @@ import com.stakater.nordmart.search.model.Product;
 import com.stakater.nordmart.search.repository.ProductRepository;
 import com.stakater.nordmart.search.service.SearchService;
 import org.elasticsearch.common.unit.Fuzziness;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
@@ -22,6 +24,8 @@ import static org.elasticsearch.index.query.QueryBuilders.multiMatchQuery;
 
 @Service
 public class ElasticSearchService implements SearchService {
+    private static final Logger logger = LoggerFactory.getLogger(ElasticSearchService.class);
+
     @Autowired
     private ProductRepository productRepository;
     @Autowired
@@ -29,6 +33,8 @@ public class ElasticSearchService implements SearchService {
 
     @Override
     public ProductSearchResults performSearch(ProductSearchCriteria productSearchCriteria) {
+        logger.info("Going to perform search with criteria {}", productSearchCriteria.getCriteria());
+
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
                 .withQuery(
                         multiMatchQuery(productSearchCriteria.getCriteria().toLowerCase(), "name", "description")
@@ -43,6 +49,7 @@ public class ElasticSearchService implements SearchService {
                 .map(product -> productMapper.productToProductDto(product))
                 .collect(Collectors.toList());
 
+        logger.info("Perform search with criteria {}, results: {}", productSearchCriteria.getCriteria(), productDtos);
         return new ProductSearchResults(productSearchCriteria.getCriteria(), productDtos);
     }
 }

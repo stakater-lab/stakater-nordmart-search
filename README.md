@@ -65,7 +65,7 @@ kubectl apply -f [helm-release](https://github.com/stakater-lab/nordmart-dev-app
 ## Integration with Kafka
 
 Products search service consumes data from topic with name 'productsTopic', it can be configured using 
-skakater-nordmart-search.kafka.product.topic.name property. Application consumes 3 types of messages in JSON
+stakater-nordmart-search.kafka.product.topic.name property. Application consumes 3 types of messages in JSON
 format called commands:
 
 - productCreate - used to create product
@@ -87,24 +87,24 @@ Can be found in application.yml:
 
  Kafka connection configuration
  
-- skakater-nordmart-search.kafka.product.topic.name - name of the topic from which all the product commands are consumed
-- skakater-nordmart-search.kafka.product.topic.create.on-startup - boolean property which defines if topic should be 
+- stakater-nordmart-search.kafka.product.topic.name - name of the topic from which all the product commands are consumed
+- stakater-nordmart-search.kafka.product.topic.create.on-startup - boolean property which defines if topic should be 
 created on startup
-- skakater-nordmart-search.kafka.product.topic.create.number-of-partitions - number of partitions on which this topic is
+- stakater-nordmart-search.kafka.product.topic.create.number-of-partitions - number of partitions on which this topic is
 divided
-- skakater-nordmart-search.kafka.product.topic.create.replication-factor - topic replication factor
-- skakater-nordmart-search.kafka.bootstrap-servers - Kafka bootstrap servers
+- stakater-nordmart-search.kafka.product.topic.create.replication-factor - topic replication factor
+- stakater-nordmart-search.kafka.bootstrap-servers - Kafka bootstrap servers
 
 CORS configuration
 
-- skakater-nordmart-search.cors.allowed.hosts - CORS allowed hosts
+- stakater-nordmart-search.cors.allowed.hosts - CORS allowed hosts
 
  Elasticsearch connection configuration
 
-- skakater-nordmart-search.elasticsearch.host - Elasticsearch host
-- skakater-nordmart-search.elasticsearch.port - port of Elasticsearch
-- skakater-nordmart-search.elasticsearch.username - username for Elasticsearch
-- skakater-nordmart-search.elasticsearch.password - password for Elasticsearch
+- stakater-nordmart-search.elasticsearch.host - Elasticsearch host
+- stakater-nordmart-search.elasticsearch.port - port of Elasticsearch
+- stakater-nordmart-search.elasticsearch.username - username for Elasticsearch
+- stakater-nordmart-search.elasticsearch.password - password for Elasticsearch
 
  Server configuration
 

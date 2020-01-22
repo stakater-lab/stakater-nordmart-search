@@ -40,7 +40,7 @@ public class BaseTest {
 
 	protected static final String CONTROLLER_PATH = "/v1/product-search";
 
-	@Value("${skakater-nordmart-search.kafka.product.topic.name}")
+	@Value("${stakater-nordmart-search.kafka.product.topic.name}")
 	protected String productTopicName;
 
 	@Autowired

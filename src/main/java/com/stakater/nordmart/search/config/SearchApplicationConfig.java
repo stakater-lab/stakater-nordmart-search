@@ -35,25 +35,25 @@ import java.util.Map;
 public class SearchApplicationConfig {
     private static final Logger logger = LoggerFactory.getLogger(SearchApplicationConfig.class);
 
-    @Value("${skakater-nordmart-search.kafka.product.topic.create.on-startup}")
+    @Value("${stakater-nordmart-search.kafka.product.topic.create.on-startup}")
     private Boolean createProductTopicOnStartup;
-    @Value("${skakater-nordmart-search.kafka.product.topic.name}")
+    @Value("${stakater-nordmart-search.kafka.product.topic.name}")
     private String productTopicName;
-    @Value("${skakater-nordmart-search.kafka.product.topic.number-of-partitions}")
+    @Value("${stakater-nordmart-search.kafka.product.topic.number-of-partitions}")
     private Integer productTopicNumberOfPartitions;
-    @Value("${skakater-nordmart-search.kafka.product.topic.replication-factor}")
+    @Value("${stakater-nordmart-search.kafka.product.topic.replication-factor}")
     private Short productTopicReplicationFactor;
     @Value("${spring.application.name}")
     private String applicationName;
-    @Value("${skakater-nordmart-search.cors.allowed.hosts}")
+    @Value("${stakater-nordmart-search.cors.allowed.hosts}")
     private String[] corsAllowedHosts;
-    @Value("${skakater-nordmart-search.kafka.bootstrap-servers}")
+    @Value("${stakater-nordmart-search.kafka.bootstrap-servers}")
     private List<String> bootstrapServers;
 
     @Autowired
     private ProductCommandFacade productCommandFacade;
 
-    @ConditionalOnProperty(name = "skakater-nordmart-search.kafka.product.topic.create.on-startup",
+    @ConditionalOnProperty(name = "stakater-nordmart-search.kafka.product.topic.create.on-startup",
                            havingValue = "true")
     @Bean
     public NewTopic productsTopic() {
@@ -61,7 +61,7 @@ public class SearchApplicationConfig {
                 productTopicReplicationFactor);
     }
 
-    @ConditionalOnProperty(name = "skakater-nordmart-search.kafka.product.topic.create.on-startup",
+    @ConditionalOnProperty(name = "stakater-nordmart-search.kafka.product.topic.create.on-startup",
             havingValue = "true")
     @Bean
     public KafkaAdmin kafkaAdmin() {
@@ -78,6 +78,7 @@ public class SearchApplicationConfig {
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.Integer().getClass().getName());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        props.put(StreamsConfig.DEFAULT_PRODUCTION_EXCEPTION_HANDLER_CLASS_CONFIG, "com.stakater.nordmart.search.config.CustomProductionExceptionHandler");
         return new KafkaStreamsConfiguration(props);
     }
 
