@@ -1,5 +1,6 @@
 package com.stakater.nordmart.search.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stakater.nordmart.search.BaseTest;
 import com.stakater.nordmart.search.dto.product.ProductCreate;
@@ -18,7 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.OK;
 
 @DirtiesContext
 public class ProductSearchControllerTest extends BaseTest {
@@ -63,9 +64,8 @@ public class ProductSearchControllerTest extends BaseTest {
         String productUpdateJson = objectMapper.writeValueAsString(productUpdate);
         kafkaTemplate.send(productTopicName, productUpdateJson);
 
-        ResponseEntity<ProductSearchResults> responseEntity = performSearch();
+        ProductSearchResults productSearchResults = performSearch();
 
-        ProductSearchResults productSearchResults = responseEntity.getBody();
         assertEquals(CAR_CRITERIA, productSearchResults.getCriteria());
         List<ProductDto> products = productSearchResults.getProducts();
         assertEquals(1, products.size());
@@ -91,20 +91,16 @@ public class ProductSearchControllerTest extends BaseTest {
         String productDeleteJson = objectMapper.writeValueAsString(productDelete);
         kafkaTemplate.send(productTopicName, productDeleteJson);
 
-        ResponseEntity<ProductSearchResults> responseEntity = performSearch();
-
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        ProductSearchResults productSearchResults = responseEntity.getBody();
+        ProductSearchResults productSearchResults = performSearch();
 
         assertEquals(CAR_CRITERIA, productSearchResults.getCriteria());
         List<ProductDto> products = productSearchResults.getProducts();
         assertEquals(0, products.size());
     }
 
-    private void testProductSearch() throws InterruptedException {
-        ResponseEntity<ProductSearchResults> responseEntity = performSearch();
+    private void testProductSearch() throws InterruptedException, JsonProcessingException {
+        ProductSearchResults productSearchResults = performSearch();
 
-        ProductSearchResults productSearchResults = responseEntity.getBody();
         assertEquals(CAR_CRITERIA, productSearchResults.getCriteria());
         List<ProductDto> products = productSearchResults.getProducts();
         assertEquals(1, products.size());
@@ -116,13 +112,14 @@ public class ProductSearchControllerTest extends BaseTest {
     }
 
     @NotNull
-    private ResponseEntity<ProductSearchResults> performSearch() throws InterruptedException {
-        ResponseEntity<ProductSearchResults> responseEntity = null;
+    private ProductSearchResults performSearch() throws InterruptedException, JsonProcessingException {
+        ResponseEntity<String> responseEntity;
+        ProductSearchResults productSearchResults = null;
 
         int counter = 10;
         boolean dataIndexed = false;
         while (!dataIndexed && counter > 0) {
-            Thread.sleep(500);
+            Thread.sleep(1000);
 
             HttpHeaders headers = new HttpHeaders();
             headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
@@ -133,13 +130,16 @@ public class ProductSearchControllerTest extends BaseTest {
             HttpEntity<?> entity = new HttpEntity<>(headers);
 
             responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET,
-                    entity, ProductSearchResults.class);
+                    entity, String.class);
+
             counter--;
             if (responseEntity.hasBody() && OK.equals(responseEntity.getStatusCode())) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                productSearchResults = objectMapper.readValue(responseEntity.getBody(), ProductSearchResults.class);
                 dataIndexed = true;
             }
         }
-        return responseEntity;
+        return productSearchResults;
     }
 
     @NotNull

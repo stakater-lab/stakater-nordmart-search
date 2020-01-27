@@ -38,7 +38,7 @@ public class BaseTest {
 	@Value("${server.servlet.contextPath}")
 	protected String serverContextPath;
 
-	protected static final String CONTROLLER_PATH = "/v1/product-search";
+	protected static final String CONTROLLER_PATH = "/api/v1/product-search";
 
 	@Value("${stakater-nordmart-search.kafka.product.topic.name}")
 	protected String productTopicName;

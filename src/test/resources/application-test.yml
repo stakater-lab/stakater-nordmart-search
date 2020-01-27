@@ -14,6 +14,8 @@ stakater-nordmart-search:
     password: ${ELASTICSEARCH_PASSWORD:stakatertest}
 
 spring:
+  servlet:
+    contextPath: /
   application.name: skakater-normart-search
 
 server:

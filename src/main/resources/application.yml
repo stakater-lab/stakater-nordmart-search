@@ -17,6 +17,8 @@ spring:
   application.name: stakater-normart-search
 
 server:
+  servlet:
+    contextPath: /
   error.include-stacktrace: never
   host: ${HOST:localhost}
   port: ${PORT:8080}
