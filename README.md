@@ -5,6 +5,25 @@ Spring Boot microservice for Products Search
 This project implements search functionality for the products. It consumes data about products from Kafka topic 
 and stores it into Elasticsearch. Afterwards it can be searched using REST API.
 
+## User scenarios
+
+**Product operations**
+
+Service has Kafka consumer for Create, Update and Delete operations with products:
+* Create - service consumes product create message from products topic of Kafka and stores products into Elasticsearch.
+ Product can be searched via Nordmart Web after that.
+* Update - service consumes product update message from products topic of Kafka and updates product in Elasticsearch. 
+Updated product can be searched via Nordmart Web after that.
+* Delete - service consumes delete command from products topic of Kafka and deletes product from 
+ Elasticsearch. Product no longer available for search via Nordmart Web after that.   
+
+**Search operations**
+
+User can search for product using Nordmart Web. In this case GET request is performed to "/api/v1/product-search" URL
+with criteria parameter(string with product name or description that user searches for). Service passes criteria in
+query to Elasticsearch and returns found products as response. In this way all the products in the system can
+ be searched.
+
 ## Dependencies
 
 It requires following things to be installed:
