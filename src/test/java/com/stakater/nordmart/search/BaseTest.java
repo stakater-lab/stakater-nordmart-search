@@ -67,6 +67,7 @@ public class BaseTest {
 						.withExposedPorts(9200);
 		container.start();
 		System.setProperty("ELASTICSEARCH_PORT", String.valueOf(container.getMappedPort(9200)));
+		System.setProperty("ELASTICSEARCH_HOST", String.valueOf(container.getContainerIpAddress()));
 	}
 
 	protected String getTestServerUrl() {
