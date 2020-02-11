@@ -14,11 +14,11 @@ deployment:
         name: elasticsearch-secret
         key: elasticsearch_password
   - name: ELASTICSEARCH_HOST
-    value: "elasticsearch-svc.nordmart-dev-apps"
+    value: "elasticsearch-svc"
   - name: ELASTICSEARCH_PORT
     value: "9200"
   - name: KAFKA_ADDRESS
-    value: "kafka-cluster-kafka-bootstrap.nordmart-dev-apps"
+    value: "kafka-cluster-kafka-bootstrap"
   - name: KAFKA_PORT
     value: "9092"
   - name: JAEGER_ENDPOINT
