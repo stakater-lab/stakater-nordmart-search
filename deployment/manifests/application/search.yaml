@@ -1,0 +1,107 @@
+---
+# Source: application/templates/service.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: search
+    group: com.stakater.platform
+    provider: stakater
+    version: "1.0.0"
+    chart: "application-0.0.12"
+    release: "RELEASE-NAME"
+    heritage: "Tiller"
+  name: search
+spec:
+  selector:
+    app: search
+    
+  ports:
+    []
+    
+---
+# Source: application/templates/deployment.yaml
+
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: search
+    group: com.stakater.platform
+    provider: stakater
+    version: "1.0.0"
+    chart: "application-0.0.12"
+    release: "RELEASE-NAME"
+    heritage: "Tiller"
+  annotations:
+    reloader.stakater.com/auto: "true"
+    
+  name: search
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: search
+        group: com.stakater.platform
+        provider: stakater
+        version: "1.0.0"
+        chart: "application-0.0.12"
+        release: "RELEASE-NAME"
+        heritage: "Tiller"
+        app: search
+        
+    spec:      
+      imagePullSecrets:
+      - name: docker-registry-nexus-secret
+      containers:
+      - name: search
+        image: "docker.release.stakater.com:443/stakater/search:v0.0.2"
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: ELASTICSEARCH_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: elasticsearch_password
+                name: elasticsearch-secret
+          - name: ELASTICSEARCH_HOST
+            value: elasticsearch-svc.nordmart-dev-apps
+          - name: ELASTICSEARCH_PORT
+            value: "9200"
+          - name: KAFKA_ADDRESS
+            value: kafka-cluster-kafka-bootstrap.nordmart-dev-apps
+          - name: KAFKA_PORT
+            value: "9092"
+          
+      serviceAccountName: default        
+---
+# Source: application/templates/clusterrole.yaml
+
+---
+# Source: application/templates/clusterrolebinding.yaml
+
+---
+# Source: application/templates/configmap.yaml
+
+---
+# Source: application/templates/ingress.yaml
+
+---
+# Source: application/templates/pvc.yaml
+
+---
+# Source: application/templates/role-binding.yaml
+
+---
+# Source: application/templates/role.yaml
+
+---
+# Source: application/templates/routes.yaml
+
+---
+# Source: application/templates/secret.yaml
+
+---
+# Source: application/templates/serviceaccount.yaml
+
