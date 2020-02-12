@@ -18,7 +18,9 @@ spec:
     app: search
     
   ports:
-    []
+    - name: https
+      port: 8080
+      targetPort: 8080
     
 ---
 # Source: application/templates/deployment.yaml
@@ -34,9 +36,6 @@ metadata:
     chart: "application-0.0.12"
     release: "RELEASE-NAME"
     heritage: "Tiller"
-  annotations:
-    reloader.stakater.com/auto: "true"
-    
   name: search
 spec:
   replicas: 1
@@ -52,12 +51,10 @@ spec:
         heritage: "Tiller"
         app: search
         
-    spec:      
-      imagePullSecrets:
-      - name: docker-registry-nexus-secret
+    spec:
       containers:
       - name: search
-        image: "docker.release.stakater.com:443/stakater/search:v0.0.2"
+        image: "stakater/search:v0.0.1"
         imagePullPolicy: IfNotPresent
         env:
           - name: ELASTICSEARCH_PASSWORD
@@ -66,14 +63,35 @@ spec:
                 key: elasticsearch_password
                 name: elasticsearch-secret
           - name: ELASTICSEARCH_HOST
-            value: elasticsearch-svc.nordmart-dev-apps
+            value: elasticsearch-svc
           - name: ELASTICSEARCH_PORT
             value: "9200"
           - name: KAFKA_ADDRESS
-            value: kafka-cluster-kafka-bootstrap.nordmart-dev-apps
+            value: kafka-cluster-kafka-bootstrap
           - name: KAFKA_PORT
             value: "9092"
+          - name: JAEGER_ENDPOINT
+            value: http://jaeger-collector.istio-system:14268/api/traces
           
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 60
+          successThreshold: 1
+          timeoutSeconds: 1
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 60
+          successThreshold: 1
+          timeoutSeconds: 1
+        
       serviceAccountName: default        
 ---
 # Source: application/templates/clusterrole.yaml
