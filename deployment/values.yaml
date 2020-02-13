@@ -5,7 +5,7 @@ deployment:
     app: search
   volumes: {}
   image:
-    repository: stakater/search
+    repository: stakater/stakater-nordmart-search
     tag: v0.0.1
   env:
   - name: ELASTICSEARCH_PASSWORD
