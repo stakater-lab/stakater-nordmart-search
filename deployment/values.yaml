@@ -1,5 +1,7 @@
 applicationName: "search"
 deployment:
+  additionalLabels:
+    appCategory: "backend"
   annotations:
   podLabels:
     app: search
