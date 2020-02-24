@@ -1,7 +1,7 @@
 FROM gcr.io/distroless/java:8
 
 LABEL name="Product Search Service" \
-      maintainer="Stakater <stakater@aurorasolutions.io>" \
+      maintainer="hello@stakater.com" \
       vendor="Stakater" \
       release="1" \
       summary="Project containing product search service for Nordmart"
