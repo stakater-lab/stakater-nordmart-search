@@ -5,6 +5,16 @@ Spring Boot microservice for Products Search
 This project implements search functionality for the products. It consumes data about products from Kafka topic 
 and stores it into Elasticsearch. Afterwards it can be searched using REST API.
 
+## Dependencies
+
+### Owned (Direct)
+
+- ElasticSearch
+
+### Shared
+
+- Kafka
+
 ## User scenarios
 
 **Product operations**
