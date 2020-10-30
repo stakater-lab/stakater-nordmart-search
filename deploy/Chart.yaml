@@ -1,0 +1,15 @@
+apiVersion: v2
+appVersion: 0.0.1
+description: A Helm chart for Kubernetes
+name: search
+type: application
+version: 0.0.1
+
+dependencies:
+  - name: application
+    version: 0.0.29
+    repository: https://stakater.github.io/stakater-charts/
+  - name: elasticsearch
+    repository: https://helm.elastic.co/
+    version: 7.9.3
+    condition: elasticsearch.enabled
