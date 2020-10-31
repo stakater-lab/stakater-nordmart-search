@@ -1,10 +1,10 @@
-## Build
+## BUILD
 FROM maven:3.6.3-openjdk-11-slim AS build
 COPY src /usr/src/app/src
 COPY pom.xml /usr/src/app
 RUN mvn -f /usr/src/app/pom.xml clean package
 
-## Run
+## RUN
 FROM registry.access.redhat.com/ubi8/openjdk-11
 
 LABEL name="swebis-annual-reports" \
