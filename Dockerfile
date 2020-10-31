@@ -7,7 +7,7 @@ RUN mvn -f /usr/src/app/pom.xml clean package
 ## RUN
 FROM registry.access.redhat.com/ubi8/openjdk-11
 
-LABEL name="swebis-annual-reports" \
+LABEL name="search" \
       maintainer="Stakater <hello@stakater.com>" \
       vendor="Stakater" \
       release="1" \
