@@ -7,6 +7,7 @@ application:
     podLabels:
       app: search
     volumes: {}
+    imagePullSecrets: nexus-creds
     image:
       repository: stakater/stakater-nordmart-search
       tag: v0.0.1
