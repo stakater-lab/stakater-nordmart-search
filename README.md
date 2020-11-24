@@ -139,3 +139,7 @@ CORS configuration
 - management.endpoint.prometheus.enabled - if prometheus is enabled
 - management.endpoints.web.exposure.include - which management endpoints are exposed
 - management.metrics.export.prometheus.enabled - whether exporting of metrics to Prometheus is enabled. 
+
+## TODO
+
+- Debug failed test due to docker environment issue in tekton  
