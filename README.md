@@ -1,6 +1,7 @@
 # stakater-nordmart-search
 Spring Boot microservice for Products Search
 
+
 ## Introduction
 This project implements search functionality for the products. It consumes data about products from Kafka topic 
 and stores it into Elasticsearch. Afterwards it can be searched using REST API.
