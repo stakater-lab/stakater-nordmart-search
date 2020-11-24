@@ -5,8 +5,14 @@ application:
       appCategory: "backend"
     annotations:
     podLabels:
-      app: search
     volumes: {}
+    resources: 
+      limits:
+        memory: 1Gi 
+        cpu: 0.5
+      requests:
+        memory: 128Mi
+        cpu: 0.1
     imagePullSecrets: nexus-creds
     image:
       repository: stakater/stakater-nordmart-search
