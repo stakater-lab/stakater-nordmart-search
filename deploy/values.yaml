@@ -1,0 +1,69 @@
+application:
+  applicationName: "search"
+  deployment:
+    additionalLabels:
+      appCategory: "backend"
+    annotations:
+    podLabels:
+    volumes: {}
+    resources: 
+      limits:
+        memory: 1Gi 
+        cpu: 0.5
+      requests:
+        memory: 128Mi
+        cpu: 0.1
+    imagePullSecrets: nexus-creds
+    image:
+      repository: stakater/stakater-nordmart-search
+      tag: v0.0.1
+    env:
+    - name: ELASTICSEARCH_USERNAME
+      value: elastic
+    - name: ELASTICSEARCH_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: search-elasticsearch-es-elastic-user
+          key: elastic
+    - name: ELASTICSEARCH_HOST
+      value: "search-elasticsearch-es-http"
+    - name: ELASTICSEARCH_PORT
+      value: "9200"
+    - name: KAFKA_ADDRESS
+      value: "nordmart-kafka-bootstrap"
+    - name: KAFKA_PORT
+      value: "9092"
+    - name: JAEGER_ENDPOINT
+      value: "http://jaeger-collector.istio-system:14268/api/traces"
+    probes:
+      readinessProbe:
+        failureThreshold: 3
+        periodSeconds: 60
+        successThreshold: 1
+        timeoutSeconds: 1
+        initialDelaySeconds: 10
+        httpGet:
+          path: /actuator/health
+          port: 8080
+      livenessProbe:
+        failureThreshold: 3
+        periodSeconds: 60
+        successThreshold: 1
+        timeoutSeconds: 1
+        initialDelaySeconds: 10
+        httpGet:
+          path: /actuator/health
+          port: 8080
+  service:
+    ports:
+    - port: 8080
+      name: https
+      targetPort: 8080
+  rbac:
+    create: false
+    serviceAccount:
+      name: default
+  configMap:
+    enabled: false
+
+  
