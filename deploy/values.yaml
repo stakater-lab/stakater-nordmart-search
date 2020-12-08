@@ -13,7 +13,7 @@ application:
       requests:
         memory: 128Mi
         cpu: 0.1
-    imagePullSecrets: nexus-creds
+    imagePullSecrets: nexus-docker-config-forked
     image:
       repository: stakater/stakater-nordmart-search
       tag: v0.0.1
