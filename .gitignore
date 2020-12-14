@@ -37,3 +37,4 @@ Session.vim
 **/charts/*.tgz
 
 .history
+deploy/Chart.lock

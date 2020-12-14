@@ -1,5 +1,16 @@
 application:
   applicationName: "search"
+  configMap:
+    enabled: true
+    files:
+    - nameSuffix: ""
+      data:
+        ELASTICSEARCH_USERNAME: elastic
+        ELASTICSEARCH_HOST: "search-elasticsearch-es-http"
+        ELASTICSEARCH_PORT: "9200"
+        KAFKA_ADDRESS: "nordmart-kafka-bootstrap"
+        KAFKA_PORT: "9092"
+        JAEGER_ENDPOINT: "http://jaeger-collector.istio-system:14268/api/traces"
   deployment:
     additionalLabels:
       appCategory: "backend"
@@ -17,24 +28,15 @@ application:
     image:
       repository: stakater/stakater-nordmart-search
       tag: v0.0.1
+    envFrom:
+    - type: configmap
+      name: ""    
     env:
-    - name: ELASTICSEARCH_USERNAME
-      value: elastic
     - name: ELASTICSEARCH_PASSWORD
       valueFrom:
         secretKeyRef:
           name: search-elasticsearch-es-elastic-user
           key: elastic
-    - name: ELASTICSEARCH_HOST
-      value: "search-elasticsearch-es-http"
-    - name: ELASTICSEARCH_PORT
-      value: "9200"
-    - name: KAFKA_ADDRESS
-      value: "nordmart-kafka-bootstrap"
-    - name: KAFKA_PORT
-      value: "9092"
-    - name: JAEGER_ENDPOINT
-      value: "http://jaeger-collector.istio-system:14268/api/traces"
     probes:
       readinessProbe:
         failureThreshold: 3
@@ -63,7 +65,5 @@ application:
     create: false
     serviceAccount:
       name: default
-  configMap:
-    enabled: false
 
   
