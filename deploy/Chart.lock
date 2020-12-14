@@ -1,9 +1,0 @@
-dependencies:
-- name: elasticsearch
-  repository: https://charts.bitnami.com/bitnami
-  version: 13.0.1
-- name: application
-  repository: https://stakater.github.io/stakater-charts
-  version: 0.0.29
-digest: sha256:2ab09c362b864385eae4d471f4bf39c778a11bf0d1d55771657221fcb0cd27c5
-generated: "2020-11-20T22:12:10.118925932+05:00"
